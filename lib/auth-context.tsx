@@ -7,10 +7,13 @@ import { supabase as supabaseClient } from './supabase-client';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 // Tipos básicos para usuário e organização
-export type User = { id: string /*…outros campos se desejar*/ };
+export type User = {
+  id: string;
+  email: string;
+  // inclua outros campos necessários (e.g. name, avatar_url…)
+};
 export type Organization = { id: string /*…*/ };
 
-// Interface do context incluindo signOut
 export interface AuthContextType {
   user: User | null;
   organization: Organization | null;
@@ -21,8 +24,11 @@ export interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const user: User | null = { id: 'stub-user-id' };            // TODO: pegar usuário real
-  const organization: Organization | null = { id: 'stub-org' };// TODO: carregar org real
+  const user: User | null = {
+    id: 'stub-user-id',
+    email: 'stub@domain.com',
+  };
+  const organization: Organization | null = { id: 'stub-org' };
 
   // Método para logout, stub de exemplo
   const signOut = async () => {
