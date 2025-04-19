@@ -1,6 +1,8 @@
+// app/layout.tsx
+
+import './globals.css'               // <- logo no topo
 import { Inter } from 'next/font/google'
 import { AuthProvider } from '@/lib/auth-context'
-import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
