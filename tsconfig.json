@@ -13,19 +13,15 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
 
-    // *** ESSAS DUAS LINHAS RESOLVEM O ERRO DE DEFAULT IMPORT ***
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-
-    // alias @ → ./ (raiz do projeto)
+    // **Seus aliases**
     "baseUrl": ".",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["./*"]
     }
   },
   "include": [
     "next-env.d.ts",
-    "global.d.ts",
+    "global.d.ts",      // <-- garante carregar seus stubs
     "**/*.ts",
     "**/*.tsx"
   ],
