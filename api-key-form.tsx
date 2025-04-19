@@ -27,6 +27,12 @@ export default function ApiKeyForm({
   onSuccess = () => {},
 }: ApiKeyFormProps) {
   const { supabase, user, organization } = useAuth();
+
+  // Garante que user e organization não sejam nulos
+  if (!user || !organization) {
+    return null;
+  }
+
   const [loading, setLoading] = useState(false);
   const [newApiKey, setNewApiKey] = useState<string | null>(null);
 

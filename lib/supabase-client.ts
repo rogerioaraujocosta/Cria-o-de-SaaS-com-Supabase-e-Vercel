@@ -47,3 +47,88 @@ export async function createApiKey({
   if (error) throw error;
   return data as ApiKey;
 }
+
+// 1) categories
+export async function getCategories({
+  supabase,
+  organizationId,
+}: { supabase: SupabaseClient; organizationId: string }): Promise<any[]> {
+  // TODO: implementar real
+  return [];
+}
+
+// 2) documentos CRUD
+export async function createDocument({
+  supabase,
+  organizationId,
+  title,
+  content,
+  collection_id,
+  external_id,
+  metadata,
+}: {
+  supabase: SupabaseClient;
+  organizationId: string;
+  title: string;
+  content: string;
+  collection_id?: string;
+  external_id?: string;
+  metadata?: any;
+}): Promise<any> {
+  // TODO: implementar real
+  return {};
+}
+
+export async function updateDocument({
+  supabase,
+  documentId,
+  organizationId,
+  title,
+  content,
+}: {
+  supabase: SupabaseClient;
+  documentId: string;
+  organizationId: string;
+  title: string;
+  content: string;
+}): Promise<any> {
+  // TODO: implementar real
+  return {};
+}
+
+export async function deleteDocument({
+  supabase,
+  documentId,
+  organizationId,
+}: {
+  supabase: SupabaseClient;
+  documentId: string;
+  organizationId: string;
+}): Promise<any> {
+  // TODO: implementar real
+  return {};
+}
+
+// 3) search
+export async function searchDocuments({
+  supabase,
+  query,
+  organizationId,
+}: { supabase: SupabaseClient; query: string; organizationId: string }): Promise<any[]> {
+  // TODO: implementar real
+  return [];
+}
+
+// 4) shared views
+export async function createSharedView({
+  supabase,
+  organizationId,
+  // outros campos…
+}: {
+  supabase: SupabaseClient;
+  organizationId: string;
+  [key: string]: any;
+}): Promise<any> {
+  // TODO: implementar real
+  return {};
+}
