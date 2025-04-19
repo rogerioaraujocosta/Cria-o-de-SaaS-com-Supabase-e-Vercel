@@ -9,6 +9,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
+type ApiKeyFormProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  onSuccess?: () => void;
+};
+
 const apiKeySchema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
   permissions: z.array(z.string()).optional(),
@@ -19,12 +25,12 @@ export default function ApiKeyForm({
   isOpen,
   onClose,
   onSuccess = () => {},
-}) {
+}: ApiKeyFormProps) {
   const { supabase, user, organization } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [newApiKey, setNewApiKey] = useState(null);
+  const [newApiKey, setNewApiKey] = useState<string | null>(null);
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof apiKeySchema>>({
     resolver: zodResolver(apiKeySchema),
     defaultValues: {
       name: '',
@@ -33,10 +39,10 @@ export default function ApiKeyForm({
     },
   });
 
-  const handleSubmit = async (data) => {
+  const handleSubmit = async (data: z.infer<typeof apiKeySchema>) => {
     try {
       setLoading(true);
-      
+
       const result = await createApiKey({
         supabase,
         organizationId: organization.id,
@@ -45,15 +51,14 @@ export default function ApiKeyForm({
         permissions: data.permissions,
         expiresAt: data.expires_at || null,
       });
-      
+
       setNewApiKey(result.key);
       onSuccess();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro ao criar chave de API:', error);
-      // Mostrar erro no formulário
-      form.setError('root', { 
+      form.setError('root', {
         type: 'manual',
-        message: `Erro ao criar chave de API: ${error.message}` 
+        message: `Erro ao criar chave de API: ${error.message}`,
       });
     } finally {
       setLoading(false);
@@ -72,7 +77,7 @@ export default function ApiKeyForm({
         <DialogHeader>
           <DialogTitle>Nova Chave de API</DialogTitle>
         </DialogHeader>
-        
+
         {newApiKey ? (
           <div className="space-y-4">
             <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-md">
@@ -86,7 +91,7 @@ export default function ApiKeyForm({
                 {newApiKey}
               </div>
             </div>
-            
+
             <div className="text-sm text-muted-foreground">
               <p>Use esta chave para autenticar requisições à API.</p>
               <p className="mt-2">Exemplo:</p>
@@ -97,7 +102,7 @@ export default function ApiKeyForm({
   -d '{"query": "sua consulta aqui"}'`}
               </pre>
             </div>
-            
+
             <DialogFooter>
               <Button onClick={handleClose}>Fechar</Button>
             </DialogFooter>
@@ -108,7 +113,7 @@ export default function ApiKeyForm({
               <FormField
                 control={form.control}
                 name="name"
-                render={({ field }) => (
+                render={({ field }: any) => (
                   <FormItem>
                     <FormLabel>Nome</FormLabel>
                     <FormControl>
@@ -121,17 +126,17 @@ export default function ApiKeyForm({
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="expires_at"
-                render={({ field }) => (
+                render={({ field }: any) => (
                   <FormItem>
                     <FormLabel>Data de expiração (opcional)</FormLabel>
                     <FormControl>
-                      <Input 
-                        type="date" 
-                        {...field} 
+                      <Input
+                        type="date"
+                        {...field}
                         min={new Date().toISOString().split('T')[0]}
                       />
                     </FormControl>
@@ -142,13 +147,13 @@ export default function ApiKeyForm({
                   </FormItem>
                 )}
               />
-              
+
               {form.formState.errors.root && (
                 <div className="text-sm font-medium text-destructive">
                   {form.formState.errors.root.message}
                 </div>
               )}
-              
+
               <DialogFooter>
                 <Button
                   type="button"
