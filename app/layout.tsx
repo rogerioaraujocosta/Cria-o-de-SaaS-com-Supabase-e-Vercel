@@ -1,12 +1,7 @@
 // app/layout.tsx
 
-"use client";
-
 import './globals.css'
-import { Inter } from 'next/font/google'
-import { AuthProvider } from '@/lib/auth-context'
-
-const inter = Inter({ subsets: ['latin'] })
+import Providers from './providers'
 
 export const metadata = {
   title: 'VectorDB SaaS',
@@ -20,8 +15,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={inter.className}>
-        <AuthProvider>{children}</AuthProvider>
+      <body>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
