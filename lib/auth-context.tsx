@@ -1,12 +1,22 @@
+// lib/auth-context.tsx
+
+"use client";
+
 import React, { createContext, useContext, ReactNode } from 'react';
 
-type AuthContextType = { user: any };
+type AuthContextType = {
+  user: any;
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const user = null; // TODO: implemente a lógica real de autenticação
-  return <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

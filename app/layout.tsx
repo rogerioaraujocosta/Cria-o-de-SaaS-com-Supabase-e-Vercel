@@ -1,6 +1,8 @@
 // app/layout.tsx
 
-import './globals.css'               // <- logo no topo
+"use client";
+
+import './globals.css'
 import { Inter } from 'next/font/google'
 import { AuthProvider } from '@/lib/auth-context'
 
@@ -19,9 +21,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   )
